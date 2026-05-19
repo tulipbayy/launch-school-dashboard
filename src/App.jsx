@@ -199,9 +199,6 @@ function App() {
             <section className="content-grid">
               <div className="panel">
                 <h2>Add Class</h2>
-                <p className="panel-note">
-                  This lets a teacher create a class assigned to their name.
-                </p>
 
                 <form onSubmit={addClass} className="form-stack">
                   <input
@@ -234,9 +231,6 @@ function App() {
 
               <div className="panel">
                 <h2>Add Student Grade</h2>
-                <p className="panel-note">
-                  Teachers can add students to their own roster and record a grade.
-                </p>
 
                 <form onSubmit={addStudentToClass} className="form-stack">
                   <input
