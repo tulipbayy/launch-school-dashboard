@@ -5,13 +5,19 @@ const emptyStudent = {
   lastName: "",
   birthday: "",
   gradeLevel: "",
+  className: "",
   guardianName: "",
   guardianPhone: "",
   guardianEmail: "",
   notes: "",
 };
 
-export default function StudentForm({ initialStudent, onSubmit, onCancel }) {
+export default function StudentForm({
+  initialStudent,
+  gradeOptions,
+  onSubmit,
+  onCancel,
+}) {
   const [formData, setFormData] = useState(emptyStudent);
 
   useEffect(() => {
@@ -21,6 +27,7 @@ export default function StudentForm({ initialStudent, onSubmit, onCancel }) {
         lastName: initialStudent.lastName || "",
         birthday: initialStudent.birthday || "",
         gradeLevel: initialStudent.gradeLevel || "",
+        className: initialStudent.className || "",
         guardianName: initialStudent.guardianName || "",
         guardianPhone: initialStudent.guardianPhone || "",
         guardianEmail: initialStudent.guardianEmail || "",
@@ -43,91 +50,155 @@ export default function StudentForm({ initialStudent, onSubmit, onCancel }) {
   function handleSubmit(event) {
     event.preventDefault();
 
-    if (!formData.firstName.trim() || !formData.lastName.trim()) {
-      alert("First name and last name are required.");
+    if (
+      !formData.firstName.trim() ||
+      !formData.lastName.trim() ||
+      !formData.birthday ||
+      !formData.gradeLevel ||
+      !formData.guardianName.trim()
+    ) {
+      alert("Please complete the required student and guardian fields.");
       return;
     }
 
-    onSubmit(formData);
+    if (!formData.guardianPhone.trim() && !formData.guardianEmail.trim()) {
+      alert("Please provide at least one guardian contact method.");
+      return;
+    }
+
+    onSubmit({
+      ...formData,
+      firstName: formData.firstName.trim(),
+      lastName: formData.lastName.trim(),
+      guardianName: formData.guardianName.trim(),
+      guardianPhone: formData.guardianPhone.trim(),
+      guardianEmail: formData.guardianEmail.trim(),
+      className: formData.className.trim(),
+      notes: formData.notes.trim(),
+    });
     setFormData(emptyStudent);
   }
 
   return (
     <form className="card form" onSubmit={handleSubmit}>
-      <h2>{initialStudent ? "Edit Student" : "Add Student"}</h2>
-
-      <div className="form-grid">
-        <input
-          className="input"
-          name="firstName"
-          placeholder="First name"
-          value={formData.firstName}
-          onChange={handleChange}
-        />
-
-        <input
-          className="input"
-          name="lastName"
-          placeholder="Last name"
-          value={formData.lastName}
-          onChange={handleChange}
-        />
-
-        <input
-          className="input"
-          name="birthday"
-          type="date"
-          value={formData.birthday}
-          onChange={handleChange}
-        />
-
-        <select
-          className="input"
-          name="gradeLevel"
-          value={formData.gradeLevel}
-          onChange={handleChange}
-        >
-          <option value="">Select grade</option>
-          <option value="K">Kindergarten</option>
-          <option value="1st">1st Grade</option>
-          <option value="2nd">2nd Grade</option>
-          <option value="3rd">3rd Grade</option>
-          <option value="4th">4th Grade</option>
-          <option value="5th">5th Grade</option>
-        </select>
-
-        <input
-          className="input"
-          name="guardianName"
-          placeholder="Guardian name"
-          value={formData.guardianName}
-          onChange={handleChange}
-        />
-
-        <input
-          className="input"
-          name="guardianPhone"
-          placeholder="Guardian phone"
-          value={formData.guardianPhone}
-          onChange={handleChange}
-        />
-
-        <input
-          className="input"
-          name="guardianEmail"
-          placeholder="Guardian email"
-          value={formData.guardianEmail}
-          onChange={handleChange}
-        />
+      <div className="section-heading">
+        <h2>{initialStudent ? "Edit Student" : "Add Student"}</h2>
+        <p>Required fields are marked with an asterisk.</p>
       </div>
 
-      <textarea
-        className="input"
-        name="notes"
-        placeholder="Notes"
-        value={formData.notes}
-        onChange={handleChange}
-      />
+      <div className="form-grid">
+        <label className="field">
+          <span>First name *</span>
+          <input
+            className="input"
+            name="firstName"
+            placeholder="Emma"
+            value={formData.firstName}
+            onChange={handleChange}
+            required
+          />
+        </label>
+
+        <label className="field">
+          <span>Last name *</span>
+          <input
+            className="input"
+            name="lastName"
+            placeholder="Johnson"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+          />
+        </label>
+
+        <label className="field">
+          <span>Birthday *</span>
+          <input
+            className="input"
+            name="birthday"
+            type="date"
+            value={formData.birthday}
+            onChange={handleChange}
+            required
+          />
+        </label>
+
+        <label className="field">
+          <span>Grade *</span>
+          <select
+            className="input"
+            name="gradeLevel"
+            value={formData.gradeLevel}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select grade</option>
+            {gradeOptions.map((grade) => (
+              <option key={grade} value={grade}>
+                {grade === "K" ? "Kindergarten" : `${grade} Grade`}
+              </option>
+            ))}
+          </select>
+        </label>
+
+        <label className="field">
+          <span>Class assignment</span>
+          <input
+            className="input"
+            name="className"
+            placeholder="3A - Ms. Carter"
+            value={formData.className}
+            onChange={handleChange}
+          />
+        </label>
+
+        <label className="field">
+          <span>Guardian name *</span>
+          <input
+            className="input"
+            name="guardianName"
+            placeholder="Sarah Johnson"
+            value={formData.guardianName}
+            onChange={handleChange}
+            required
+          />
+        </label>
+
+        <label className="field">
+          <span>Guardian phone</span>
+          <input
+            className="input"
+            name="guardianPhone"
+            type="tel"
+            placeholder="555-123-4567"
+            value={formData.guardianPhone}
+            onChange={handleChange}
+          />
+        </label>
+
+        <label className="field">
+          <span>Guardian email</span>
+          <input
+            className="input"
+            name="guardianEmail"
+            type="email"
+            placeholder="guardian@example.com"
+            value={formData.guardianEmail}
+            onChange={handleChange}
+          />
+        </label>
+      </div>
+
+      <label className="field">
+        <span>Notes</span>
+        <textarea
+          className="input"
+          name="notes"
+          placeholder="Academic, medical, pickup, or support notes"
+          value={formData.notes}
+          onChange={handleChange}
+        />
+      </label>
 
       <div className="form-actions">
         <button className="btn btn-primary" type="submit">
