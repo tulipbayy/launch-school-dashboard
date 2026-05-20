@@ -21,9 +21,10 @@ const solData = [
 ];
 
 const pieData = [
-  { name: 'K', value: 300 }, { name: '1st', value: 350 },
-  { name: '2nd', value: 320 }, { name: '3rd', value: 340 },
-  { name: '4th', value: 330 }, { name: '5th', value: 360 }
+  { name: 'K', value: 280 }, { name: '1st', value: 290 },
+  { name: '2nd', value: 270 }, { name: '3rd', value: 300 },
+  { name: '4th', value: 285 }, { name: '5th', value: 295 },
+  { name: '6th', value: 280 }
 ];
 
 const letterGradeData = [
@@ -34,7 +35,7 @@ const letterGradeData = [
   { grade: 'F', count: 35 }
 ];
 
-const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042', '#0088FE', '#00C49F'];
+const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042', '#0088FE', '#00C49F', '#d0ed57'];
 
 const kpiData = [
   { title: 'Total Current Enrollment', value: '2,000' },
