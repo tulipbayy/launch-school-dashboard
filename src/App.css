@@ -1,8 +1,22 @@
 .dashboard-shell {
+  --page-bg: #c69a9d;
+  --sidebar-bg: #8d6665;
+  --card-bg: #f3d5d5;
+  --panel-bg: #e4b2b3;
+  --soft-panel-bg: #f8e2e2;
+  --border: #8f6262;
+  --text: #4f3637;
+  --muted-text: #7a5354;
+  --light-text: #fff7f7;
+  --accent: #75494a;
+  --accent-hover: #5f3a3b;
+}
+
+.dashboard-shell {
   display: grid;
   grid-template-columns: 230px 1fr;
   min-height: 100vh;
-  background: #f4f7fb;
+  background: var(--page-bg);
 }
 
 .sidebar {
@@ -10,13 +24,13 @@
   flex-direction: column;
   gap: 28px;
   padding: 28px 22px;
-  background: #26364d;
-  color: #ffffff;
+  background: var(--sidebar-bg);
+  color: var(--light-text);
 }
 
 .sidebar h2 {
   margin: 0;
-  color: #ffffff;
+  color: var(--light-text);
   font-size: 1.45rem;
 }
 
@@ -25,14 +39,21 @@
   gap: 12px;
 }
 
-.sidebar a {
-  color: #ffffff;
+.sidebar button {
+  border: 0;
+  background: transparent;
+  color: var(--light-text);
   padding: 10px 0;
+  font: inherit;
+  text-align: left;
   text-decoration: none;
+  cursor: pointer;
 }
 
-.sidebar a:hover {
-  color: #f3c14b;
+.sidebar button:hover,
+.sidebar button.active {
+  color: #ffe8e8;
+  font-weight: 700;
 }
 
 .logout-link {
@@ -53,14 +74,14 @@
 }
 
 .eyebrow {
-  color: #49637d;
+  color: var(--accent);
   font-weight: 700;
   margin-bottom: 4px;
 }
 
 .dashboard-header h1 {
   margin: 0;
-  color: #172033;
+  color: var(--text);
   font-size: 2rem;
 }
 
@@ -68,11 +89,13 @@
 .stat-card,
 .events-panel,
 .info-panel,
-.quick-actions a {
+.page-panel,
+.quick-actions button {
   border: 1px solid #dbe3ee;
+  border-color: rgba(143, 98, 98, 0.28);
   border-radius: 8px;
-  background: #ffffff;
-  box-shadow: 0 10px 24px rgba(31, 45, 61, 0.08);
+  background: var(--card-bg);
+  box-shadow: 0 10px 24px rgba(78, 48, 49, 0.12);
 }
 
 .user-card {
@@ -84,7 +107,7 @@
 
 .user-card span {
   display: block;
-  color: #667085;
+  color: var(--muted-text);
   font-size: 0.9rem;
 }
 
@@ -94,8 +117,8 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: #f3c14b;
-  color: #172033;
+  background: var(--soft-panel-bg);
+  color: var(--text);
   font-weight: 800;
 }
 
@@ -112,12 +135,12 @@
 }
 
 .stat-card span {
-  color: #49637d;
+  color: var(--text);
   font-weight: 700;
 }
 
 .stat-card strong {
-  color: #172033;
+  color: var(--text);
   font-size: 2.3rem;
   line-height: 1;
 }
@@ -134,19 +157,23 @@
   justify-content: space-between;
   gap: 16px;
   padding: 20px 22px;
-  border-bottom: 1px solid #dbe3ee;
+  border-bottom: 1px solid rgba(143, 98, 98, 0.34);
+  background: var(--panel-bg);
 }
 
 .panel-header h2,
 .info-panel h2 {
   margin: 0;
-  color: #172033;
+  color: var(--text);
 }
 
-.panel-header a {
-  color: #2f6f9f;
+.panel-header button {
+  border: 0;
+  background: transparent;
+  color: var(--light-text);
+  cursor: pointer;
+  font: inherit;
   font-weight: 700;
-  text-decoration: none;
 }
 
 .event-list {
@@ -162,7 +189,9 @@
   justify-content: space-between;
   gap: 16px;
   padding: 16px 22px;
-  border-bottom: 1px solid #edf1f6;
+  border-bottom: 1px solid rgba(143, 98, 98, 0.3);
+  color: var(--light-text);
+  background: var(--panel-bg);
 }
 
 .event-list li:last-child {
@@ -170,7 +199,7 @@
 }
 
 .event-list time {
-  color: #667085;
+  color: var(--light-text);
   white-space: nowrap;
 }
 
@@ -180,7 +209,7 @@
 
 .info-panel p {
   margin-top: 12px;
-  color: #667085;
+  color: var(--muted-text);
 }
 
 .quick-actions {
@@ -189,19 +218,56 @@
   gap: 24px;
 }
 
-.quick-actions a {
+.quick-actions button {
   display: grid;
   min-height: 120px;
   place-items: center;
-  color: #172033;
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
   font-size: 1.25rem;
   font-weight: 800;
   text-align: center;
-  text-decoration: none;
 }
 
-.quick-actions a:hover {
-  border-color: #2f6f9f;
+.quick-actions button:hover {
+  border-color: var(--accent);
+  color: var(--accent-hover);
+}
+
+.page-panel {
+  overflow: hidden;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 16px 22px;
+  border-bottom: 1px solid rgba(143, 98, 98, 0.24);
+  text-align: left;
+}
+
+th {
+  color: var(--muted-text);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  background: var(--soft-panel-bg);
+}
+
+td {
+  color: var(--text);
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
 }
 
 @media (max-width: 900px) {
