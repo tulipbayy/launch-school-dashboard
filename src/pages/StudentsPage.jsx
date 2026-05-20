@@ -27,6 +27,270 @@ const initialStudents = [
     guardianEmail: "michael@example.com",
     notes: "Strong math skills.",
   },
+  {
+    id: "s3",
+    firstName: "Olivia",
+    lastName: "Brown",
+    birthday: "2017-01-08",
+    gradeLevel: "2nd",
+    className: "2A - Ms. Patel",
+    guardianName: "Diane Brown",
+    guardianPhone: "555-222-1188",
+    guardianEmail: "diane.brown@example.com",
+    notes: "Receives reading support.",
+  },
+  {
+    id: "s4",
+    firstName: "Liam",
+    lastName: "Garcia",
+    birthday: "2018-03-19",
+    gradeLevel: "1st",
+    className: "1B - Mr. Davis",
+    guardianName: "Ana Garcia",
+    guardianPhone: "555-310-4490",
+    guardianEmail: "ana.garcia@example.com",
+    notes: "Excellent classroom helper.",
+  },
+  {
+    id: "s5",
+    firstName: "Ava",
+    lastName: "Martinez",
+    birthday: "2014-12-03",
+    gradeLevel: "5th",
+    className: "5A - Ms. Wilson",
+    guardianName: "Rosa Martinez",
+    guardianPhone: "555-876-4412",
+    guardianEmail: "rosa.martinez@example.com",
+    notes: "Student council representative.",
+  },
+  {
+    id: "s6",
+    firstName: "Ethan",
+    lastName: "Davis",
+    birthday: "2015-07-22",
+    gradeLevel: "4th",
+    className: "4A - Ms. Nguyen",
+    guardianName: "Andre Davis",
+    guardianPhone: "555-661-2044",
+    guardianEmail: "andre.davis@example.com",
+    notes: "Enjoys science projects.",
+  },
+  {
+    id: "s7",
+    firstName: "Mia",
+    lastName: "Miller",
+    birthday: "2019-05-11",
+    gradeLevel: "K",
+    className: "K1 - Ms. Green",
+    guardianName: "Kelly Miller",
+    guardianPhone: "555-404-7710",
+    guardianEmail: "kelly.miller@example.com",
+    notes: "Afternoon pickup by aunt on Fridays.",
+  },
+  {
+    id: "s8",
+    firstName: "Lucas",
+    lastName: "Wilson",
+    birthday: "2016-11-30",
+    gradeLevel: "3rd",
+    className: "3B - Mr. Brooks",
+    guardianName: "Harold Wilson",
+    guardianPhone: "555-730-1182",
+    guardianEmail: "harold.wilson@example.com",
+    notes: "Prefers front-row seating.",
+  },
+  {
+    id: "s9",
+    firstName: "Sophia",
+    lastName: "Anderson",
+    birthday: "2017-06-17",
+    gradeLevel: "2nd",
+    className: "2B - Mr. Cooper",
+    guardianName: "Maya Anderson",
+    guardianPhone: "555-229-8830",
+    guardianEmail: "maya.anderson@example.com",
+    notes: "Strong art skills.",
+  },
+  {
+    id: "s10",
+    firstName: "Mason",
+    lastName: "Thomas",
+    birthday: "2018-09-02",
+    gradeLevel: "1st",
+    className: "1A - Ms. Rivera",
+    guardianName: "Caleb Thomas",
+    guardianPhone: "555-673-9001",
+    guardianEmail: "caleb.thomas@example.com",
+    notes: "Bus rider.",
+  },
+  {
+    id: "s11",
+    firstName: "Isabella",
+    lastName: "Taylor",
+    birthday: "2014-02-27",
+    gradeLevel: "5th",
+    className: "5B - Mr. Harris",
+    guardianName: "Nora Taylor",
+    guardianPhone: "555-441-7812",
+    guardianEmail: "nora.taylor@example.com",
+    notes: "Advanced math group.",
+  },
+  {
+    id: "s12",
+    firstName: "James",
+    lastName: "Moore",
+    birthday: "2015-10-14",
+    gradeLevel: "4th",
+    className: "4B - Mr. Lee",
+    guardianName: "Peter Moore",
+    guardianPhone: "555-919-5400",
+    guardianEmail: "peter.moore@example.com",
+    notes: "Needs inhaler on field trips.",
+  },
+  {
+    id: "s13",
+    firstName: "Charlotte",
+    lastName: "Jackson",
+    birthday: "2019-08-23",
+    gradeLevel: "K",
+    className: "K2 - Mr. Young",
+    guardianName: "Elaine Jackson",
+    guardianPhone: "555-393-1177",
+    guardianEmail: "elaine.jackson@example.com",
+    notes: "Speech support on Tuesdays.",
+  },
+  {
+    id: "s14",
+    firstName: "Benjamin",
+    lastName: "White",
+    birthday: "2016-02-05",
+    gradeLevel: "3rd",
+    className: "3A - Ms. Carter",
+    guardianName: "Monica White",
+    guardianPhone: "555-612-3434",
+    guardianEmail: "monica.white@example.com",
+    notes: "Enjoys coding club.",
+  },
+  {
+    id: "s15",
+    firstName: "Amelia",
+    lastName: "Harris",
+    birthday: "2017-04-28",
+    gradeLevel: "2nd",
+    className: "2A - Ms. Patel",
+    guardianName: "Jordan Harris",
+    guardianPhone: "555-100-4566",
+    guardianEmail: "jordan.harris@example.com",
+    notes: "Peanut allergy.",
+  },
+  {
+    id: "s16",
+    firstName: "Henry",
+    lastName: "Martin",
+    birthday: "2018-12-16",
+    gradeLevel: "1st",
+    className: "1B - Mr. Davis",
+    guardianName: "Leah Martin",
+    guardianPhone: "555-706-1818",
+    guardianEmail: "leah.martin@example.com",
+    notes: "New enrollment.",
+  },
+  {
+    id: "s17",
+    firstName: "Harper",
+    lastName: "Thompson",
+    birthday: "2014-06-07",
+    gradeLevel: "5th",
+    className: "5A - Ms. Wilson",
+    guardianName: "Victor Thompson",
+    guardianPhone: "555-882-5019",
+    guardianEmail: "victor.thompson@example.com",
+    notes: "Robotics club.",
+  },
+  {
+    id: "s18",
+    firstName: "Alexander",
+    lastName: "Robinson",
+    birthday: "2015-11-09",
+    gradeLevel: "4th",
+    className: "4A - Ms. Nguyen",
+    guardianName: "Simone Robinson",
+    guardianPhone: "555-732-6090",
+    guardianEmail: "simone.robinson@example.com",
+    notes: "IEP meeting scheduled.",
+  },
+  {
+    id: "s19",
+    firstName: "Evelyn",
+    lastName: "Clark",
+    birthday: "2019-10-21",
+    gradeLevel: "K",
+    className: "K1 - Ms. Green",
+    guardianName: "Rachel Clark",
+    guardianPhone: "555-234-6600",
+    guardianEmail: "rachel.clark@example.com",
+    notes: "After-school care.",
+  },
+  {
+    id: "s20",
+    firstName: "Daniel",
+    lastName: "Lewis",
+    birthday: "2016-07-01",
+    gradeLevel: "3rd",
+    className: "3B - Mr. Brooks",
+    guardianName: "Owen Lewis",
+    guardianPhone: "555-809-2121",
+    guardianEmail: "owen.lewis@example.com",
+    notes: "Great participation.",
+  },
+  {
+    id: "s21",
+    firstName: "Abigail",
+    lastName: "Lee",
+    birthday: "2017-09-26",
+    gradeLevel: "2nd",
+    className: "2B - Mr. Cooper",
+    guardianName: "Grace Lee",
+    guardianPhone: "555-909-8181",
+    guardianEmail: "grace.lee@example.com",
+    notes: "Bilingual household.",
+  },
+  {
+    id: "s22",
+    firstName: "Michael",
+    lastName: "Walker",
+    birthday: "2018-01-13",
+    gradeLevel: "1st",
+    className: "1A - Ms. Rivera",
+    guardianName: "Tanya Walker",
+    guardianPhone: "555-467-3201",
+    guardianEmail: "tanya.walker@example.com",
+    notes: "Needs bus pass replacement.",
+  },
+  {
+    id: "s23",
+    firstName: "Elizabeth",
+    lastName: "Hall",
+    birthday: "2014-03-31",
+    gradeLevel: "5th",
+    className: "5B - Mr. Harris",
+    guardianName: "Brian Hall",
+    guardianPhone: "555-388-1455",
+    guardianEmail: "brian.hall@example.com",
+    notes: "Choir member.",
+  },
+  {
+    id: "s24",
+    firstName: "Sebastian",
+    lastName: "Allen",
+    birthday: "2015-05-25",
+    gradeLevel: "4th",
+    className: "4B - Mr. Lee",
+    guardianName: "Priya Allen",
+    guardianPhone: "",
+    guardianEmail: "priya.allen@example.com",
+    notes: "Guardian phone pending.",
+  },
 ];
 
 const gradeOptions = ["K", "1st", "2nd", "3rd", "4th", "5th"];
@@ -36,8 +300,12 @@ export default function StudentsPage() {
   const [editingStudent, setEditingStudent] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGrade, setSelectedGrade] = useState("All");
+  const [selectedClass, setSelectedClass] = useState("All");
 
   const normalizedSearch = searchTerm.trim().toLowerCase();
+  const classOptions = Array.from(
+    new Set(students.map((student) => student.className).filter(Boolean))
+  ).sort();
 
   const filteredStudents = students
     .filter((student) => {
@@ -58,7 +326,10 @@ export default function StudentsPage() {
       const matchesGrade =
         selectedGrade === "All" || student.gradeLevel === selectedGrade;
 
-      return matchesSearch && matchesGrade;
+      const matchesClass =
+        selectedClass === "All" || student.className === selectedClass;
+
+      return matchesSearch && matchesGrade && matchesClass;
     })
     .sort((a, b) =>
       `${a.lastName} ${a.firstName}`.localeCompare(
@@ -163,6 +434,23 @@ export default function StudentsPage() {
             {gradeOptions.map((grade) => (
               <option key={grade} value={grade}>
                 {grade === "K" ? "Kindergarten" : `${grade} Grade`}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="toolbar-field">
+          <label htmlFor="class-filter">Class</label>
+          <select
+            id="class-filter"
+            className="input"
+            value={selectedClass}
+            onChange={(event) => setSelectedClass(event.target.value)}
+          >
+            <option value="All">All Classes</option>
+            {classOptions.map((className) => (
+              <option key={className} value={className}>
+                {className}
               </option>
             ))}
           </select>
