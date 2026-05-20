@@ -48,13 +48,21 @@ export default function SchoolStatistics() {
   return (
     <div style={{ display: 'flex', height: '100vh', backgroundColor: '#cbb3b3', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
       
+      {/* SIDEBAR */}
       <nav style={{ width: '250px', backgroundColor: '#8a6e6e', color: 'white', padding: '30px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
         <h2 style={{ fontSize: '1.8rem', fontWeight: 'normal', margin: '0 0 20px 0' }}>Navigation</h2>
         <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '1.2rem' }}>Home</a>
         <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '1.2rem' }}>Student Database</a>
-        <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '1.2rem', fontWeight: 'bold' }}>School Statistics</a>
+        
+        {/* Active Page Highlight */}
+        <div style={{ backgroundColor: '#705656', width: '100%', textAlign: 'center', padding: '15px 0', borderLeft: '4px solid #fff' }}>
+          <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '1.2rem', fontWeight: 'bold' }}>School Statistics</a>
+        </div>
+        
         <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '1.2rem' }}>Teacher Dashboard</a>
+        <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '1.2rem' }}>Class View</a>
         <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '1.2rem' }}>Calendar</a>
+        
         <div style={{ marginTop: 'auto', marginBottom: '20px' }}>
           <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '1.2rem' }}>Logout</a>
         </div>
