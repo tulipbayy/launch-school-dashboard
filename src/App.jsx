@@ -1,8 +1,9 @@
-import TeachersPage from "./pages/TeachersPage";
+import StudentsPage from "./pages/StudentsPage";
 import "./App.css";
 
 function App() {
-  return <TeachersPage />;
+  return <StudentsPage />;
 }
 
 export default App;
+
