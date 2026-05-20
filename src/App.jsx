@@ -1,121 +1,92 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
 import './App.css'
 
+const stats = [
+  { label: 'Total Students', value: 248 },
+  { label: 'Total Teachers', value: 18 },
+  { label: 'Total Classes', value: 12 },
+  { label: 'Upcoming Events', value: 4 },
+]
+
+const events = [
+  { name: 'Parent Teacher Conference', date: 'May 22, 2026' },
+  { name: 'Field Trip', date: 'May 23, 2026' },
+  { name: 'School Assembly', date: 'May 27, 2026' },
+  { name: 'Last Day of School', date: 'May 30, 2026' },
+]
+
+const navItems = ['Home', 'Students', 'Classes', 'Teachers', 'Calendar']
+
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+    <div className="dashboard-shell">
+      <aside className="sidebar" aria-label="Main navigation">
+        <h2>Navigation</h2>
+        <nav>
+          {navItems.map((item) => (
+            <a href="/" key={item}>
+              {item}
+            </a>
+          ))}
+        </nav>
+        <a className="logout-link" href="/">
+          Logout
+        </a>
+      </aside>
 
-      <div className="ticks"></div>
+      <main className="dashboard-main">
+        <header className="dashboard-header">
+          <div>
+            <p className="eyebrow">Thomas Jefferson Elementary</p>
+            <h1>School Dashboard</h1>
+          </div>
+          <section className="user-card" aria-label="Current user">
+            <div className="avatar" aria-hidden="true">
+              TJ
+            </div>
+            <div>
+              <strong>Admin User</strong>
+              <span>School Office</span>
+            </div>
+          </section>
+        </header>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+        <section className="stats-grid" aria-label="School summary">
+          {stats.map((stat) => (
+            <article className="stat-card" key={stat.label}>
+              <span>{stat.label}</span>
+              <strong>{stat.value}</strong>
+            </article>
+          ))}
+        </section>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+        <section className="content-grid">
+          <article className="events-panel">
+            <div className="panel-header">
+              <h2>Upcoming Events</h2>
+              <a href="/">View Calendar</a>
+            </div>
+            <ul className="event-list">
+              {events.map((event) => (
+                <li key={event.name}>
+                  <span>{event.name}</span>
+                  <time>{event.date}</time>
+                </li>
+              ))}
+            </ul>
+          </article>
+
+          <aside className="info-panel">
+            <h2>User Info</h2>
+            <p>Use this area later for login details, alerts, or quick notes.</p>
+          </aside>
+        </section>
+
+        <section className="quick-actions" aria-label="Quick actions">
+          <a href="/">Manage Students</a>
+          <a href="/">View Classes</a>
+        </section>
+      </main>
+    </div>
   )
 }
 
