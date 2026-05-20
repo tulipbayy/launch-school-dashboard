@@ -75,6 +75,30 @@
   line-height: 1;
 }
 
+.status-message {
+  align-items: center;
+  background: #fffafa;
+  border: 1px solid #b9959a;
+  color: #5d474d;
+  display: flex;
+  font-weight: 800;
+  gap: 14px;
+  justify-content: space-between;
+  margin: 0 auto 24px;
+  max-width: 1180px;
+  padding: 16px 18px;
+}
+
+.status-message-error {
+  background: #f9dddd;
+  border-color: #b85f6a;
+  color: #73323b;
+}
+
+.empty-data-message span {
+  color: #5d474d;
+}
+
 .card {
   border-radius: 4px;
   margin-bottom: 24px;
@@ -324,6 +348,11 @@ textarea.input {
   .form-grid,
   .toolbar {
     grid-template-columns: 1fr;
+  }
+
+  .status-message {
+    align-items: stretch;
+    flex-direction: column;
   }
 
   .table-heading {

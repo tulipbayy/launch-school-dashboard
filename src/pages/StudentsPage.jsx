@@ -1,6 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StudentForm from "../components/students/StudentForm";
 import StudentTable from "../components/students/StudentTable";
+import {
+  createStudent,
+  deleteStudent,
+  getStudents,
+  seedStudents,
+  updateStudent,
+} from "../services/studentService";
 
 const initialStudents = [
   {
@@ -296,11 +303,32 @@ const initialStudents = [
 const gradeOptions = ["K", "1st", "2nd", "3rd", "4th", "5th"];
 
 export default function StudentsPage() {
-  const [students, setStudents] = useState(initialStudents);
+  const [students, setStudents] = useState([]);
   const [editingStudent, setEditingStudent] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGrade, setSelectedGrade] = useState("All");
   const [selectedClass, setSelectedClass] = useState("All");
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    loadStudents();
+  }, []);
+
+  async function loadStudents() {
+    try {
+      setIsLoading(true);
+      setError("");
+      const firebaseStudents = await getStudents();
+      setStudents(firebaseStudents);
+    } catch (loadError) {
+      console.error(loadError);
+      setError("Unable to load students from Firebase.");
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   const normalizedSearch = searchTerm.trim().toLowerCase();
   const classOptions = Array.from(
@@ -343,36 +371,63 @@ export default function StudentsPage() {
 
   const assignedStudents = students.filter((student) => student.className).length;
 
-  function handleSave(studentData) {
-    if (editingStudent) {
-      setStudents((prevStudents) =>
-        prevStudents.map((student) =>
-          student.id === editingStudent.id
-            ? { ...student, ...studentData }
-            : student
-        )
-      );
-      setEditingStudent(null);
-      return;
+  async function handleSave(studentData) {
+    try {
+      setIsSaving(true);
+      setError("");
+
+      if (editingStudent) {
+        const updatedStudent = await updateStudent(editingStudent.id, studentData);
+
+        setStudents((prevStudents) =>
+          prevStudents.map((student) =>
+            student.id === editingStudent.id ? updatedStudent : student
+          )
+        );
+        setEditingStudent(null);
+        return;
+      }
+
+      const newStudent = await createStudent(studentData);
+      setStudents((prevStudents) => [...prevStudents, newStudent]);
+    } catch (saveError) {
+      console.error(saveError);
+      setError("Unable to save student record.");
+    } finally {
+      setIsSaving(false);
     }
-
-    const newStudent = {
-      id: crypto.randomUUID(),
-      ...studentData,
-    };
-
-    setStudents((prevStudents) => [...prevStudents, newStudent]);
   }
 
-  function handleDelete(studentId) {
+  async function handleDelete(studentId) {
     const shouldDelete = confirm(
       "Delete this student record? This action cannot be undone."
     );
     if (!shouldDelete) return;
 
-    setStudents((prevStudents) =>
-      prevStudents.filter((student) => student.id !== studentId)
-    );
+    try {
+      setError("");
+      await deleteStudent(studentId);
+      setStudents((prevStudents) =>
+        prevStudents.filter((student) => student.id !== studentId)
+      );
+    } catch (deleteError) {
+      console.error(deleteError);
+      setError("Unable to delete student record.");
+    }
+  }
+
+  async function handleSeedStudents() {
+    try {
+      setIsSaving(true);
+      setError("");
+      const createdStudents = await seedStudents(initialStudents);
+      setStudents(createdStudents);
+    } catch (seedError) {
+      console.error(seedError);
+      setError("Unable to create demo student records.");
+    } finally {
+      setIsSaving(false);
+    }
   }
 
   return (
@@ -401,6 +456,30 @@ export default function StudentsPage() {
           <strong>{studentsMissingContact}</strong>
         </article>
       </section>
+
+      {error && (
+        <div className="status-message status-message-error" role="alert">
+          {error}
+        </div>
+      )}
+
+      {isLoading && (
+        <div className="status-message">Loading student records...</div>
+      )}
+
+      {!isLoading && students.length === 0 && (
+        <div className="status-message empty-data-message">
+          <span>No Firebase student records yet.</span>
+          <button
+            className="btn btn-primary"
+            type="button"
+            onClick={handleSeedStudents}
+            disabled={isSaving}
+          >
+            {isSaving ? "Creating Records..." : "Create Demo Records"}
+          </button>
+        </div>
+      )}
 
       <StudentForm
         initialStudent={editingStudent}
@@ -457,11 +536,13 @@ export default function StudentsPage() {
         </div>
       </section>
 
-      <StudentTable
-        students={filteredStudents}
-        onEdit={setEditingStudent}
-        onDelete={handleDelete}
-      />
+      {!isLoading && students.length > 0 && (
+        <StudentTable
+          students={filteredStudents}
+          onEdit={setEditingStudent}
+          onDelete={handleDelete}
+        />
+      )}
     </main>
   );
 }
