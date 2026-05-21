@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 
 // --- MOCK DATABASE ---
-// Instead of one class, we now have an object containing multiple classes!
 const classesData = {
   math3: {
     id: 'math3',
@@ -41,13 +40,10 @@ const gradingWeights = [
 ];
 
 export default function ClassPage() {
-  // STATE: This tracks which class the dropdown currently has selected
   const [selectedClassId, setSelectedClassId] = useState('math3');
   
-  // Create a variable that holds the data for whatever class is currently selected
   const currentClass = classesData[selectedClassId];
 
-  // Form State
   const [selectedStudent, setSelectedStudent] = useState('');
   const [assignmentName, setAssignmentName] = useState('');
   const [score, setScore] = useState('');
