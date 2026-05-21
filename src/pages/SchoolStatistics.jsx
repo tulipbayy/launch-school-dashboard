@@ -1,160 +1,129 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';
 import { 
   LineChart, Line, BarChart, Bar, PieChart, Pie, Cell,
   XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer 
 } from 'recharts';
 
-const attendanceData = [
-  { month: 'Aug', attendance: 1800 }, { month: 'Sept', attendance: 1900 },
-  { month: 'Oct', attendance: 1950 }, { month: 'Nov', attendance: 1850 },
-  { month: 'Dec', attendance: 1880 }, { month: 'Jan', attendance: 1820 },
-  { month: 'Feb', attendance: 1980 }, { month: 'Mar', attendance: 1750 },
-  { month: 'Apr', attendance: 1920 }, { month: 'May', attendance: 1810 },
-  { month: 'June', attendance: 1700 }
-];
-
-const solData = [
-  { grade: '3rd', score: 421.6 },
-  { grade: '4th', score: 452 },
-  { grade: '5th', score: 372 },
-  { grade: '6th', score: 511 }
-];
-
-const pieData = [
-  { name: 'K', value: 280 }, { name: '1st', value: 290 },
-  { name: '2nd', value: 270 }, { name: '3rd', value: 300 },
-  { name: '4th', value: 285 }, { name: '5th', value: 295 },
-  { name: '6th', value: 280 }
-];
-
-const letterGradeData = [
-  { grade: 'A', count: 450 },
-  { grade: 'B', count: 620 },
-  { grade: 'C', count: 310 },
-  { grade: 'D', count: 85 },
-  { grade: 'F', count: 35 }
-];
-
-const COLORS = ['#8884d8', '#82ca9d', '#ffc658', '#ff8042', '#0088FE', '#00C49F', '#d0ed57'];
-
-const kpiData = [
-  { title: 'Total Current Enrollment', value: '2,000' },
-  { title: 'Student to Teacher Ratio', value: '15:1' },
-  { title: 'Overall School SOL Pass Rate', value: '84%' },
-  { title: 'Average Daily Absences', value: '38' }
-];
-
 export default function SchoolStatistics() {
+  const [attendanceData, setAttendanceData] = useState([
+    { month: 'Aug', attendance: 1800 }, { month: 'Sept', attendance: 1900 },
+    { month: 'Oct', attendance: 1950 }, { month: 'Nov', attendance: 1850 },
+    { month: 'Dec', attendance: 1880 }, { month: 'Jan', attendance: 1820 },
+    { month: 'Feb', attendance: 1980 }, { month: 'Mar', attendance: 1750 },
+    { month: 'Apr', attendance: 1920 }, { month: 'May', attendance: 1810 },
+    { month: 'June', attendance: 1700 }
+  ]);
+
+  const solData = [
+    { grade: '3rd', score: 421.6 }, { grade: '4th', score: 452 },
+    { grade: '5th', score: 372 }, { grade: '6th', score: 511 }
+  ];
+
+  const pieData = [
+    { name: 'K', value: 280 }, { name: '1st', value: 290 },
+    { name: '2nd', value: 270 }, { name: '3rd', value: 285 },
+    { name: '4th', value: 295 }, { name: '5th', value: 288 },
+    { name: '6th', value: 292 }
+  ];
+
+  const letterGradeData = [
+    { grade: 'A', count: 850 }, { grade: 'B', count: 620 },
+    { grade: 'C', count: 340 }, { grade: 'D', count: 120 },
+    { grade: 'F', count: 70 }
+  ];
+
+  const kpiData = [
+    { title: 'Total Enrollment', value: '2,000', trend: '+4% vs last year' },
+    { title: 'Average Daily Attendance', value: '94.2%', trend: '-1.1% vs last month' },
+    { title: 'Honor Roll Students', value: '842', trend: '+12% vs last semester' },
+    { title: 'Teacher to Student Ratio', value: '1:22', trend: 'Stable' }
+  ];
+
+  const pieColors = ['#8a6e6e', '#a38787', '#bda2a2', '#d6bebe', '#e0caca', '#ebd6d6', '#f5e4e4'];
+
   return (
-    <div style={{ display: 'flex', height: '100vh', backgroundColor: '#cbb3b3', fontFamily: 'system-ui, -apple-system, sans-serif' }}>
+    <div style={{ padding: '40px', backgroundColor: '#cbb3b3', minHeight: '100vh', fontFamily: 'system-ui, sans-serif' }}>
       
-      {/* SIDEBAR */}
-      <nav style={{ width: '250px', backgroundColor: '#8a6e6e', color: 'white', padding: '30px 0', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '30px' }}>
-        <h2 style={{ fontSize: '1.8rem', fontWeight: 'normal', margin: '0 0 20px 0' }}>Navigation</h2>
-        <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '1.2rem' }}>Home</a>
-        <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '1.2rem' }}>Student Database</a>
-        
-        {/* Active Page Highlight */}
-        <div style={{ backgroundColor: '#705656', width: '100%', textAlign: 'center', padding: '15px 0', borderLeft: '4px solid #fff' }}>
-          <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '1.2rem', fontWeight: 'bold' }}>School Statistics</a>
-        </div>
-        
-        <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '1.2rem' }}>Teacher Dashboard</a>
-        <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '1.2rem' }}>Class View</a>
-        <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '1.2rem' }}>Calendar</a>
-        
-        <div style={{ marginTop: 'auto', marginBottom: '20px' }}>
-          <a href="#" style={{ color: 'white', textDecoration: 'none', fontSize: '1.2rem' }}>Logout</a>
-        </div>
-      </nav>
+      <div style={{ marginBottom: '30px', color: '#4a3b3b' }}>
+        <h1 style={{ fontSize: '2.5rem', margin: '0 0 10px 0', fontWeight: 'bold' }}>School Statistics</h1>
+        <p style={{ fontSize: '1.2rem', margin: 0, opacity: 0.8 }}>Thomas Jefferson Elementary Overview</p>
+      </div>
 
-      <main style={{ flexGrow: 1, padding: '40px', overflowY: 'auto' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '30px', marginBottom: '30px' }}>
         
-        <div style={{ textAlign: 'center', marginBottom: '40px', color: '#4a3b3b' }}>
-          <h1 style={{ fontSize: '2.5rem', margin: '0 0 10px 0', fontWeight: 'bold' }}>School Statistics</h1>
-          <p style={{ fontSize: '1.2rem', margin: 0, opacity: 0.8 }}>Thomas Jefferson Elementary School Dashboard</p>
+        {/* ROW 1: Attendance Line Chart */}
+        <div style={{ backgroundColor: '#f4ecec', padding: '25px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+          <h3 style={{ margin: '0 0 20px 0', color: '#4a3b3b', fontSize: '1.3rem' }}>Average Daily Attendance (2025-2026)</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={attendanceData}>
+              <CartesianGrid strokeDasharray="3 3" stroke="#ddd" />
+              <XAxis dataKey="month" stroke="#8a6e6e" />
+              <YAxis stroke="#8a6e6e" domain={[1600, 2000]} />
+              <Tooltip contentStyle={{ backgroundColor: '#fff', borderRadius: '8px', border: 'none', boxShadow: '0 4px 6px rgba(0,0,0,0.1)' }} />
+              <Line type="monotone" dataKey="attendance" stroke="#8b5a5a" strokeWidth={3} dot={{ r: 4, fill: '#8b5a5a' }} activeDot={{ r: 8 }} />
+            </LineChart>
+          </ResponsiveContainer>
         </div>
 
-        <div style={{ display: 'flex', gap: '20px', marginBottom: '30px' }}>
+        {/* ROW 2:Bar Chart, Pie Chart, Bar Chart */}
+        <div style={{ display: 'flex', gap: '20px' }}>
           
-          <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            
-            <div style={{ backgroundColor: '#f4ecec', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-              <h3 style={{ margin: '0 0 20px 0', color: '#4a3b3b', fontSize: '1.2rem' }}>Total Attendance Chart - 2026 (Population: 2,000)</h3>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={attendanceData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis domain={[1500, 2000]} />
-                  <Tooltip />
-                  <Line type="monotone" dataKey="attendance" stroke="#ff0000" strokeWidth={2} />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
-
-            <div style={{ backgroundColor: '#f4ecec', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', flexGrow: 1 }}>
-              <h3 style={{ margin: '0 0 20px 0', color: '#4a3b3b', fontSize: '1.2rem' }}>Average SOL Score (3-6)</h3>
-              <ResponsiveContainer width="100%" height={250}>
-                <BarChart data={solData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="grade" />
-                  <YAxis domain={[300, 600]} />
-                  <Tooltip />
-                  <Bar dataKey="score" fill="#ff4d4d" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-
-          <div style={{ width: '380px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            
-            <div style={{ backgroundColor: '#f4ecec', padding: '20px', borderRadius: '8px', display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-              <h3 style={{ margin: '0 0 20px 0', color: '#4a3b3b', fontSize: '1.2rem' }}>Enrollment by Grade Level</h3>
-              <PieChart width={340} height={320}>
-                <Pie 
-                  data={pieData} 
-                  cx="50%" 
-                  cy="50%" 
-                  outerRadius={95} 
-                  fill="#8884d8" 
-                  dataKey="value" 
-                  label 
-                >
-                  {pieData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
+          <div style={{ backgroundColor: '#f4ecec', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', flexGrow: 1 }}>
+            <h3 style={{ margin: '0 0 20px 0', color: '#4a3b3b', fontSize: '1.2rem', textAlign: 'center' }}>Average SOL Scores by Grade</h3>
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={solData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="grade" />
+                <YAxis domain={[300, 600]} />
                 <Tooltip />
-                <Legend verticalAlign="bottom" height={36}/>
-              </PieChart>
-            </div>
-
-            <div style={{ backgroundColor: '#f4ecec', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', flexGrow: 1 }}>
-              <h3 style={{ margin: '0 0 20px 0', color: '#4a3b3b', fontSize: '1.2rem', textAlign: 'center' }}>Grade Distribution</h3>
-              <ResponsiveContainer width="100%" height={200}>
-                <BarChart data={letterGradeData}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="grade" />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="count" fill="#8a6e6e" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-            
+                <Bar dataKey="score" fill="#8a6e6e" radius={[4, 4, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
-        </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', gap: '20px' }}>
-          {kpiData.map((kpi, idx) => (
-            <div key={idx} style={{ flex: 1, backgroundColor: '#f4ecec', padding: '25px 20px', borderRadius: '8px', textAlign: 'center', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
-              <h4 style={{ margin: '0 0 10px 0', color: '#4a3b3b', fontSize: '1rem', fontWeight: 'normal' }}>{kpi.title}</h4>
-              <p style={{ margin: 0, color: '#4a3b3b', fontSize: '2.2rem', fontWeight: 'bold' }}>{kpi.value}</p>
-            </div>
-          ))}
-        </div>
+          <div style={{ backgroundColor: '#f4ecec', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', width: '300px' }}>
+            <h3 style={{ margin: '0 0 10px 0', color: '#4a3b3b', fontSize: '1.2rem', textAlign: 'center' }}>Enrollment by Grade</h3>
+            <PieChart width={260} height={200}>
+              <Pie data={pieData} cx="50%" cy="45%" innerRadius={40} outerRadius={70} paddingAngle={2} dataKey="value">
+                {pieData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={pieColors[index % pieColors.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend verticalAlign="bottom" height={36}/>
+            </PieChart>
+          </div>
 
-      </main>
+          <div style={{ backgroundColor: '#f4ecec', padding: '20px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)', flexGrow: 1 }}>
+            <h3 style={{ margin: '0 0 20px 0', color: '#4a3b3b', fontSize: '1.2rem', textAlign: 'center' }}>Grade Distribution</h3>
+            <ResponsiveContainer width="100%" height={200}>
+              <BarChart data={letterGradeData}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="grade" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="count" fill="#8a6e6e" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          
+        </div>
+      </div>
+
+      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '20px' }}>
+        {kpiData.map((kpi, idx) => (
+          <div key={idx} style={{ flex: 1, backgroundColor: '#f4ecec', padding: '25px 20px', borderRadius: '8px', textAlign: 'center', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+            <h4 style={{ margin: '0 0 10px 0', color: '#666', fontSize: '1rem', fontWeight: 'normal' }}>{kpi.title}</h4>
+            <p style={{ margin: '0 0 10px 0', fontSize: '2rem', fontWeight: 'bold', color: '#4a3b3b' }}>{kpi.value}</p>
+            <span style={{ fontSize: '0.9rem', color: kpi.trend.includes('+') ? '#4caf50' : (kpi.trend.includes('-') ? '#f44336' : '#888') }}>
+              {kpi.trend}
+            </span>
+          </div>
+        ))}
+      </div>
+
     </div>
   );
 }
