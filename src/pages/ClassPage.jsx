@@ -34,10 +34,10 @@ const classesData = {
 };
 
 const gradingWeights = [
-  { category: 'Tests', weight: '40%' },
-  { category: 'Quizzes', weight: '30%' },
-  { category: 'Projects', weight: '20%' },
-  { category: 'Participation', weight: '10%' }
+  { category: 'Tests', weight: '30%' },
+  { category: 'Projects', weight: '25%' },
+  { category: 'Participation', weight: '25%' },
+  { category: 'Quizzes', weight: '20%' }
 ];
 
 export default function ClassPage() {
