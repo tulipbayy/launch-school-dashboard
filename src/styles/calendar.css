@@ -1,0 +1,253 @@
+.calendar-section {
+  overflow: hidden;
+}
+
+.calendar-nav {
+  align-items: center;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.calendar-month-title {
+  color: #3f3034;
+  font-size: 24px;
+  font-weight: 900;
+  margin: 0;
+  text-align: center;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border-top: 1px solid #c5a5aa;
+  border-left: 1px solid #c5a5aa;
+}
+
+.calendar-day-header {
+  background: #d7c2c4;
+  border-bottom: 1px solid #c5a5aa;
+  border-right: 1px solid #c5a5aa;
+  color: #6f4e56;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  padding: 10px 8px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.calendar-day {
+  background: #fffafa;
+  border-bottom: 1px solid #c5a5aa;
+  border-right: 1px solid #c5a5aa;
+  cursor: pointer;
+  min-height: 100px;
+  padding: 8px;
+  transition: background 120ms ease;
+  vertical-align: top;
+}
+
+.calendar-day:hover {
+  background: #f4e8e8;
+}
+
+.calendar-day-other {
+  background: #f9f2f2;
+}
+
+.calendar-day-other .calendar-day-num {
+  color: #b9959a;
+}
+
+.calendar-day-other:hover {
+  background: #f4ecec;
+}
+
+.calendar-day-today {
+  background: #f4e8e8;
+}
+
+.calendar-day-today .calendar-day-num {
+  background: #8d626b;
+  border-radius: 50%;
+  color: #fff8f6;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 26px;
+  width: 26px;
+}
+
+.calendar-day-selected {
+  background: #ede0e2;
+  outline: 2px solid #8d626b;
+  outline-offset: -2px;
+}
+
+.calendar-day-selected:hover {
+  background: #e8d8db;
+}
+
+.calendar-day-num {
+  color: #3f3034;
+  display: block;
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.calendar-day-events {
+  display: grid;
+  gap: 3px;
+}
+
+.event-pill {
+  border-radius: 2px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+  overflow: hidden;
+  padding: 3px 6px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: opacity 120ms ease;
+}
+
+.event-pill:hover {
+  opacity: 0.85;
+}
+
+.event-pill-academic  { background: #5d7a9e; }
+.event-pill-sports    { background: #4e8a56; }
+.event-pill-arts      { background: #9e5d78; }
+.event-pill-holiday   { background: #9e7a3a; }
+.event-pill-community { background: #3a7a8a; }
+.event-pill-other     { background: #6e6e7a; }
+
+.event-pill-more {
+  color: #6f4e56;
+  font-size: 11px;
+  font-weight: 900;
+  padding: 2px 6px;
+}
+
+.calendar-legend {
+  border-top: 1px solid #c5a5aa;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+  padding-top: 16px;
+}
+
+.legend-item {
+  align-items: center;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 900;
+  gap: 7px;
+}
+
+.legend-item::before {
+  border-radius: 2px;
+  content: '';
+  display: inline-block;
+  height: 12px;
+  width: 20px;
+}
+
+.legend-academic::before  { background: #5d7a9e; }
+.legend-sports::before    { background: #4e8a56; }
+.legend-arts::before      { background: #9e5d78; }
+.legend-holiday::before   { background: #9e7a3a; }
+.legend-community::before { background: #3a7a8a; }
+.legend-other::before     { background: #6e6e7a; }
+
+.summary-card .next-event-name {
+  font-size: 20px;
+  line-height: 1.2;
+  word-break: break-word;
+}
+
+.event-detail-empty {
+  color: #715c61;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 16px 0 4px;
+}
+
+.event-time-cell {
+  color: #5d474d;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.field-checkbox {
+  align-items: center;
+  display: flex;
+  gap: 10px;
+  padding-top: 28px;
+}
+
+.field-checkbox input[type="checkbox"] {
+  accent-color: #8d626b;
+  height: 18px;
+  min-height: unset;
+  width: 18px;
+}
+
+.field-checkbox label {
+  color: #5d474d;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+@media (max-width: 1024px) {
+  .calendar-day {
+    min-height: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .calendar-day {
+    min-height: 60px;
+    padding: 5px;
+  }
+
+  .calendar-day-header {
+    font-size: 10px;
+    padding: 8px 4px;
+  }
+
+  .calendar-month-title {
+    font-size: 18px;
+  }
+
+  .event-pill {
+    display: none;
+  }
+
+  .event-pill-more {
+    display: block;
+    font-size: 10px;
+  }
+
+  .calendar-day:has(.event-pill) .calendar-day-num::after {
+    content: ' •';
+    color: #8d626b;
+  }
+}
+
+@media (max-width: 520px) {
+  .calendar-grid {
+    font-size: 12px;
+  }
+
+  .calendar-day-num {
+    font-size: 12px;
+  }
+}
