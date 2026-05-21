@@ -8,6 +8,8 @@ import {
   updateDoc,
 } from 'firebase/firestore'
 import { db } from '../firebase'
+import ClassPage from './pages/ClassPage'
+import SchoolStatistics from './pages/SchoolStatistics'
 import StudentDirectoryPage from './pages/StudentsPage'
 import './App.css'
 
@@ -15,12 +17,6 @@ const sampleTeachers = [
   { name: 'Elena Rivera', className: 'Grade 4 Math', students: 24 },
   { name: 'Sam Patel', className: 'Grade 3 Reading', students: 22 },
   { name: 'Nora Thompson', className: 'Grade 5 Science', students: 26 },
-]
-
-const sampleClasses = [
-  { name: 'Grade 4 Math', teacher: 'Ms. Rivera', average: '91%' },
-  { name: 'Grade 3 Reading', teacher: 'Mr. Patel', average: '88%' },
-  { name: 'Grade 5 Science', teacher: 'Mrs. Thompson', average: '93%' },
 ]
 
 const stats = [
@@ -37,7 +33,14 @@ const events = [
   { name: 'Last Day of School', date: 'May 30, 2026' },
 ]
 
-const navItems = ['Home', 'Students', 'Classes', 'Teachers', 'Calendar']
+const navItems = [
+  'Home',
+  'Students',
+  'Classes',
+  'Teachers',
+  'Calendar',
+  'Statistics',
+]
 
 function App() {
   const [activePage, setActivePage] = useState('Home')
@@ -83,9 +86,10 @@ function App() {
 
         {activePage === 'Home' && <HomePage setActivePage={setActivePage} />}
         {activePage === 'Students' && <StudentDirectoryPage />}
-        {activePage === 'Classes' && <ClassesPage />}
+        {activePage === 'Classes' && <ClassPage />}
         {activePage === 'Teachers' && <TeacherDashboard />}
         {activePage === 'Calendar' && <CalendarPage />}
+        {activePage === 'Statistics' && <SchoolStatistics />}
       </main>
     </div>
   )
@@ -129,25 +133,6 @@ function HomePage({ setActivePage }) {
         </button>
       </section>
     </>
-  )
-}
-
-function ClassesPage() {
-  return (
-    <section className="page-panel">
-      <div className="panel-header">
-        <h2>Classes</h2>
-        <button type="button">Add Class</button>
-      </div>
-      <DataTable
-        headers={['Class', 'Teacher', 'Average Grade']}
-        rows={sampleClasses.map((classItem) => [
-          classItem.name,
-          classItem.teacher,
-          classItem.average,
-        ])}
-      />
-    </section>
   )
 }
 
