@@ -8,13 +8,8 @@ import {
   updateDoc,
 } from 'firebase/firestore'
 import { db } from '../firebase'
+import StudentDirectoryPage from './pages/StudentsPage'
 import './App.css'
-
-const sampleStudents = [
-  { name: 'Maya Chen', grade: '4th', teacher: 'Ms. Rivera' },
-  { name: 'Jordan Brooks', grade: '3rd', teacher: 'Mr. Patel' },
-  { name: 'Avery Johnson', grade: '5th', teacher: 'Mrs. Thompson' },
-]
 
 const sampleTeachers = [
   { name: 'Elena Rivera', className: 'Grade 4 Math', students: 24 },
@@ -87,7 +82,7 @@ function App() {
         </header>
 
         {activePage === 'Home' && <HomePage setActivePage={setActivePage} />}
-        {activePage === 'Students' && <StudentsPage />}
+        {activePage === 'Students' && <StudentDirectoryPage />}
         {activePage === 'Classes' && <ClassesPage />}
         {activePage === 'Teachers' && <TeacherDashboard />}
         {activePage === 'Calendar' && <CalendarPage />}
@@ -134,25 +129,6 @@ function HomePage({ setActivePage }) {
         </button>
       </section>
     </>
-  )
-}
-
-function StudentsPage() {
-  return (
-    <section className="page-panel">
-      <div className="panel-header">
-        <h2>Student Directory</h2>
-        <button type="button">Add Student</button>
-      </div>
-      <DataTable
-        headers={['Student', 'Grade', 'Teacher']}
-        rows={sampleStudents.map((student) => [
-          student.name,
-          student.grade,
-          student.teacher,
-        ])}
-      />
-    </section>
   )
 }
 
