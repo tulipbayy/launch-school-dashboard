@@ -88,22 +88,32 @@ export default function CalendarPage() {
   const [isSaving, setIsSaving] = useState(false);
   const [error, setError] = useState("");
 
-  async function loadEvents() {
-    try {
-      setIsLoading(true);
-      setError("");
-      const firebaseEvents = await getEvents();
-      setEvents(firebaseEvents);
-    } catch (loadError) {
-      console.error(loadError);
-      setError("Unable to load events from Firebase.");
-    } finally {
-      setIsLoading(false);
-    }
-  }
-
   useEffect(() => {
-    loadEvents();
+    let isMounted = true;
+
+    getEvents()
+      .then((firebaseEvents) => {
+        if (isMounted) {
+          setEvents(firebaseEvents);
+          setError("");
+        }
+      })
+      .catch((loadError) => {
+        console.error(loadError);
+
+        if (isMounted) {
+          setError("Unable to load events from Firebase.");
+        }
+      })
+      .finally(() => {
+        if (isMounted) {
+          setIsLoading(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   function prevMonth() {

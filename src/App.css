@@ -1,1 +1,424 @@
-/* Calendar feature — see styles/layout.css and styles/calendar.css */
+@import "./styles/students.css";
+@import "./styles/calendar.css";
+
+.dashboard-shell {
+  --page-bg: #c69a9d;
+  --sidebar-bg: #8d6665;
+  --card-bg: #f3d5d5;
+  --panel-bg: #e4b2b3;
+  --soft-panel-bg: #f8e2e2;
+  --border: #8f6262;
+  --text: #4f3637;
+  --muted-text: #7a5354;
+  --light-text: #fff7f7;
+  --accent: #75494a;
+  --accent-hover: #5f3a3b;
+
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  min-height: 100vh;
+  background: var(--page-bg);
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 28px 22px;
+  background: var(--sidebar-bg);
+  color: var(--light-text);
+}
+
+.sidebar h2 {
+  margin: 0;
+  color: var(--light-text);
+  font-size: 1.45rem;
+}
+
+.sidebar nav {
+  display: grid;
+  gap: 12px;
+}
+
+.sidebar button {
+  border: 0;
+  background: transparent;
+  color: var(--light-text);
+  padding: 10px 0;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sidebar button:hover,
+.sidebar button.active {
+  color: #ffe8e8;
+  font-weight: 700;
+}
+
+.sidebar-footer {
+  display: grid;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 247, 247, 0.28);
+}
+
+.sidebar-footer span {
+  color: #ffe8e8;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.logout-link {
+  border: 1px solid rgba(255, 247, 247, 0.45);
+  border-radius: 6px;
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.dashboard-main {
+  display: grid;
+  gap: 24px;
+  align-content: start;
+  padding: 32px;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.dashboard-header h1 {
+  margin: 0;
+  color: var(--text);
+  font-size: 2rem;
+}
+
+.dashboard-subtitle {
+  color: var(--muted-text);
+  font-weight: 700;
+  margin: 8px 0 0;
+}
+
+.user-card,
+.stat-card,
+.events-panel,
+.info-panel,
+.page-panel,
+.quick-actions button,
+.class-card {
+  border: 1px solid rgba(143, 98, 98, 0.28);
+  border-radius: 8px;
+  background: var(--card-bg);
+  box-shadow: 0 10px 24px rgba(78, 48, 49, 0.12);
+}
+
+.user-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 18px;
+}
+
+.user-card span {
+  display: block;
+  color: var(--muted-text);
+  font-size: 0.9rem;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--soft-panel-bg);
+  color: var(--text);
+  font-weight: 800;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.stat-card {
+  display: grid;
+  gap: 14px;
+  padding: 22px;
+}
+
+.stat-card span {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.stat-card strong {
+  color: var(--text);
+  font-size: 2.3rem;
+  line-height: 1;
+}
+
+.dashboard-alert {
+  border: 1px solid rgba(143, 98, 98, 0.35);
+  border-radius: 8px;
+  background: var(--soft-panel-bg);
+  color: var(--text);
+  margin: 0;
+  padding: 14px 18px;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 24px;
+}
+
+.teacher-tools {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 22px;
+  border-bottom: 1px solid rgba(143, 98, 98, 0.34);
+  background: var(--panel-bg);
+}
+
+.panel-header h2,
+.info-panel h2 {
+  margin: 0;
+  color: var(--text);
+}
+
+.panel-header button,
+.form-stack button,
+.small-button {
+  border: 0;
+  border-radius: 6px;
+  background: var(--accent);
+  color: var(--light-text);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 700;
+  padding: 10px 14px;
+}
+
+.panel-header button {
+  background: transparent;
+}
+
+.panel-header button:hover,
+.form-stack button:hover,
+.small-button:hover {
+  background: var(--accent-hover);
+}
+
+.event-list {
+  display: grid;
+  gap: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.event-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 22px;
+  border-bottom: 1px solid rgba(143, 98, 98, 0.3);
+  color: var(--light-text);
+  background: var(--panel-bg);
+}
+
+.event-list li:last-child {
+  border-bottom: 0;
+}
+
+.event-list time {
+  color: var(--light-text);
+  white-space: nowrap;
+}
+
+.info-panel {
+  padding: 22px;
+}
+
+.info-panel p {
+  margin-top: 12px;
+  color: var(--muted-text);
+}
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.quick-actions button {
+  display: grid;
+  min-height: 120px;
+  place-items: center;
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.quick-actions button:hover {
+  border-color: var(--accent);
+  color: var(--accent-hover);
+}
+
+.page-panel {
+  overflow: hidden;
+}
+
+.teacher-login-card,
+.form-panel {
+  padding-bottom: 22px;
+}
+
+.form-stack {
+  display: grid;
+  gap: 12px;
+  padding: 22px;
+}
+
+.form-stack label {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.login-row {
+  display: flex;
+  gap: 12px;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid rgba(143, 98, 98, 0.5);
+  border-radius: 6px;
+  background: var(--soft-panel-bg);
+  color: var(--text);
+  font: inherit;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 16px 22px;
+  border-bottom: 1px solid rgba(143, 98, 98, 0.24);
+  text-align: left;
+}
+
+th {
+  color: var(--muted-text);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  background: var(--soft-panel-bg);
+}
+
+td {
+  color: var(--text);
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.class-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  padding: 22px;
+}
+
+.class-card {
+  padding: 18px;
+}
+
+.class-card h3 {
+  margin: 0 0 12px;
+  color: var(--text);
+}
+
+.class-card p {
+  color: var(--muted-text);
+  margin: 8px 0;
+}
+
+.empty-message {
+  color: var(--muted-text);
+  font-style: italic;
+  margin: 0;
+  padding: 22px;
+}
+
+.grade-input {
+  max-width: 130px;
+}
+
+.small-button {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+}
+
+.dashboard-main > .page {
+  background: transparent;
+  min-height: auto;
+  padding: 0;
+}
+
+@media (max-width: 900px) {
+  .dashboard-shell,
+  .content-grid,
+  .teacher-tools {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    gap: 16px;
+  }
+
+  .sidebar nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .dashboard-header,
+  .login-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .stats-grid,
+  .quick-actions {
+    grid-template-columns: 1fr;
+  }
+}
